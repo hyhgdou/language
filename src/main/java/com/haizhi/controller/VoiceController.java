@@ -1,6 +1,5 @@
 package com.haizhi.controller;
 
-import com.haizhi.service.IUserService;
 import com.haizhi.service.VoiceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/voice")
@@ -23,15 +23,34 @@ import java.io.IOException;
 @Api(tags = "语音相关接口")
 public class VoiceController {
 
+    private final String filePath = "/haizhi/";
+
 @Autowired
 private VoiceService voiceService;
 
     @PostMapping
-    @ApiOperation(value = "保存用户上传的语音文件到指定位置")
+    @ApiOperation(value = "语音评分")
     public ResponseEntity<String> processVoice(@RequestParam("file") MultipartFile file) {
-        String filePath = "C:/Users/hyhjames/Desktop/file";//"path/to/save/voice/file"
+        //file是一个临时文件，需要转存到指定位置，否则本次请求完成后临时文件会删除
+        log.info(file.toString());
+        //原始文件名
+        String originalFilename = file.getOriginalFilename();//abc.jpg
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        //使用UUID重新生成文件名，防止文件名称重复造成文件覆盖
+        String fileName = UUID.randomUUID().toString() + suffix;//dfsdfdfd.jpg
+
+        //创建一个目录对象
+        File dir = new File(filePath);
+        //判断当前目录是否存在
+        if(!dir.exists()){
+            //目录不存在，需要创建
+            dir.mkdirs();
+        }
+
         try {
-            file.transferTo(new File(filePath));
+            //将临时文件转存到指定位置
+            file.transferTo(new File(filePath + fileName));
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save voice file.");

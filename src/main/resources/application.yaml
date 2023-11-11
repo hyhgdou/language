@@ -1,13 +1,12 @@
 server:
-  port: 8080
-
+  port: 9090
 spring:
   #数据库连接信息
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.115.222.172:3306/language?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: Aa@!haizhi23666
+    url: jdbc:mysql://101.42.163.86:3306/language?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: language
+    password: haizhi
   #文件上传的配置
   servlet:
     multipart:
@@ -27,3 +26,19 @@ mybatis-plus:
     db-config:
       id-type: assign_id
       update-strategy: not_null
+springdoc:
+  api-docs:
+    # 是否敞开接口文档
+    enabled: true
+  swagger-ui:
+    # 耐久化认证数据，假如设置为 true，它会保存授权数据而且不会在浏览器关闭/刷新时丢掉
+    persistAuthorization: true
+swagger:
+  title: haizhi API接口文档
+  description: haizhi Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: https://pickmall.cn
+  contact:
+    name: haizhi
+    url: https://pickmall.cn
+    email: 441404793@qq.com
