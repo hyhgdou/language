@@ -32,13 +32,16 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     public Result login(@RequestBody User user) throws AccountLockedException, AccountNotFoundException {
         log.info("用户登录: {}", user);
+        String p = user.getPassword();
+        String password = DigestUtils.md5DigestAsHex(p.getBytes());
+        user.setPassword(password);
         User u = userService.login(user);
         if (u ==null || u.getStatus()==0){
             return Result.error("用户名或密码错误");
         }else {
-            String p = user.getPassword();
-            String password = DigestUtils.md5DigestAsHex(p.getBytes());
-            user.setPassword(password);
+           /* String p = user.getPassword();
+            String password = DigestUtils.md5DigestAsHex(p.getBytes());*/
+         //   user.setPassword(password);
             Map<String, Object> claims = new HashMap<>();
             claims.put("id", u.getId());
             claims.put("account", u.getAccount());
@@ -46,7 +49,7 @@ public class UserController {
 
             String jwt = JwtUtil.generateJwt(claims); //jwt包含了当前登录的员工信息
 
-        return Result.success(jwt);
+            return Result.success(jwt);
     }}
 
     /**
