@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 解决跨域请求的
  */
-//fffffffffffffffffffffff
+
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
