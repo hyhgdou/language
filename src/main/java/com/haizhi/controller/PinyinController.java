@@ -2,9 +2,11 @@ package com.haizhi.controller;
 
 
 import com.haizhi.mapper.SentenceMapper;
+import com.haizhi.pojo.Pinyin;
 import com.haizhi.pojo.Sentence;
 import com.haizhi.pojo.Word;
 
+import com.haizhi.service.PinyinService;
 import com.haizhi.service.SentenceService;
 import com.haizhi.service.WordService;
 import io.swagger.annotations.Api;
@@ -17,19 +19,19 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/sentence")
-@Api(tags = "诗句相关接口")
+@RequestMapping("/pinyin")
+@Api(tags = "拼音相关接口")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class SentenceController {
+public class PinyinController {
     @Autowired
-    private SentenceService sentenceService;
+    private PinyinService pinyinService;
 
 
 
     @GetMapping("/random")
-    @ApiOperation(value = "生成随机诗句")
-    public Sentence getRandomVocabulary() {
-        return sentenceService.getRandomSentence();
+    @ApiOperation(value = "生成随机拼音")
+    public Pinyin getRandomVocabulary() {
+        return pinyinService.getRandomPinyin();
     }
 
 

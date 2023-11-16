@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户相关接口")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
