@@ -18,7 +18,7 @@ import java.util.UUID;
 @RequestMapping("/voice")
 @Slf4j
 @Api(tags = "语音相关接口")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class VoiceController {
 
     private final String filePath = "/haizhi/";

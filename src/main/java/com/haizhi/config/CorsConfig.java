@@ -1,3 +1,4 @@
+/*
 
 package com.haizhi.config;
 
@@ -6,9 +7,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
+*/
 /**
  * 解决跨域请求的
- */
+ *//*
+
 
 
 @Configuration
@@ -23,3 +26,4 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");
     }
 }
+*/

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountLockedException;
 import javax.security.auth.login.AccountNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户相关接口")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -31,7 +32,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
-    public Result login(@RequestBody User user) throws AccountLockedException, AccountNotFoundException {
+    public Result login(@RequestBody User user, HttpServletResponse res) throws AccountLockedException, AccountNotFoundException {
         log.info("用户登录: {}", user);
         String p = user.getPassword();
         String password = DigestUtils.md5DigestAsHex(p.getBytes());
@@ -50,7 +51,11 @@ public class UserController {
 
             String jwt = JwtUtil.generateJwt(claims); //jwt包含了当前登录的员工信息
 
+             res.setHeader("Access-Control-Allow-Origin", "*");
+
             return Result.success(jwt);
+
+
     }}
 
     /**

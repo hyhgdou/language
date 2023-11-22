@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/pinyin")
 @Api(tags = "拼音相关接口")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class PinyinController {
     @Autowired
     private PinyinService pinyinService;

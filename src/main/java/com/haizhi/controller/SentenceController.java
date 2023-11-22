@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sentence")
 @Api(tags = "诗句相关接口")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class SentenceController {
     @Autowired
     private SentenceService sentenceService;
