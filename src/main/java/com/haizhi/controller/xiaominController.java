@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Slf4j
@@ -27,22 +28,26 @@ public class xiaominController {
 
     @GetMapping("/wanan")
     @ApiOperation(value = "生成随机xm")
-    public Xiaomin getRandomVocabulary() {
-        return xiaominService.getRandomXiaomin();
+    public String getRandomVocabulary() {
+
+        Xiaomin xm = xiaominService.getRandomXiaomin();
+        if (xm!=null){
+            String html = "<div>";
+            html += "<p>" + xm.getText() + "</p>";
+            html += "<img src=\"" + xm.getPicture() + "\" alt=\"Image\">";
+            html += "</div>";
+            return html;
+        } else {
+            return "Image not found.";
+        }
+
+
+        }
     }
 
 
 
 
-    @GetMapping("/zuishuai")
-    @ApiOperation(value = "生成www")
-    public ResponseEntity<Xiaomin> getXm(){
-        Xiaomin id = xiaominService.getById(1L);
-       if (id!=null){
-           return ResponseEntity.ok(id);
-       }else {
-           return ResponseEntity.notFound().build();
-       }
-    }
 
-}
+
+
