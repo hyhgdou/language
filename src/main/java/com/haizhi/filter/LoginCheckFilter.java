@@ -57,6 +57,7 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
+
         //6.放行。
         log.info("令牌合法, 放行");
         chain.doFilter(request, response);

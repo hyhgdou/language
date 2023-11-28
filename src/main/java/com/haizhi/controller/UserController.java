@@ -2,6 +2,7 @@ package com.haizhi.controller;
 
 
 
+import com.haizhi.exception.CustomException;
 import com.haizhi.pojo.User;
 import com.haizhi.pojo.Result;
 import com.haizhi.service.IUserService;
@@ -18,8 +19,10 @@ import javax.security.auth.login.AccountLockedException;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -67,19 +70,38 @@ public class UserController {
     public Result<String> logout() {
         return Result.success();
     }
+
+
+
     @PostMapping("/register")
     @ApiOperation(value = "用户注册")
-    public Result save(@RequestBody User user){
+    public Result save(@RequestBody User user) {
         log.info("用户,user:{}",user);
-        userService.save(user);
-        return Result.success();
+        //userService.save(user);
+        //已经返回的字符串如果=null则说明限制全部通过，注册成功，否则失败
+        String msg=userService.addUser(user);
+        if(msg.equals("success")){
+            return Result.success();
+        }else {
+            return Result.error(msg);
+        }
     }
+
+
+
     @GetMapping("/{id}")
     @ApiOperation(value = "用户回显")
     public Result getById(@PathVariable Integer id){
         log.info("查寻用户，id:{}",id);
         User user =userService.getById(id);
         return Result.success(user);
+    }
+
+    //查询所有用户
+    @GetMapping
+    public Result findAll() {
+        List<User> list = userService.findALL();
+        return Result.success(list);
     }
 
 }

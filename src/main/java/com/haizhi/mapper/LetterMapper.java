@@ -2,7 +2,6 @@ package com.haizhi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.haizhi.pojo.Letter;
-import com.haizhi.pojo.Sentence;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
