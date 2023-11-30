@@ -21,6 +21,4 @@ public interface SingleChatService extends IService<SingleChat> {
     Dict findUnReadNums(String toUsername);
 
 
-
-
 }

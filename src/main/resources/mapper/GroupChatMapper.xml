@@ -11,4 +11,11 @@
     </select>
 
 
+    <insert id="insert" parameterType="groupChat" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into language.groupchat(content,name,avatar,time,type) values
+               (#{content},#{name},#{avatar},#{time},#{type})
+
+    </insert>
+
+
 </mapper>

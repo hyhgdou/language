@@ -23,9 +23,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from language.user")
     List <User> findALL();
 
-   /*
-    @Insert("insert into language.user (account,username,password,phone,sex,identity)values(#{account},#{username},#{password},#{phone},#{sex},#{identity})")
-    void addUser(User user);
- */
+
 
 }

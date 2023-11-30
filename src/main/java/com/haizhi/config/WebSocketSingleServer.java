@@ -5,7 +5,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import com.haizhi.pojo.SingleChat;
 import com.haizhi.service.SingleChatService;
-import javafx.fxml.Initializable;
+import com.haizhi.service.impl.SingleChatServiceImpl;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -29,9 +30,10 @@ public class WebSocketSingleServer implements InitializingBean {
     public static final Map<String, Session> sessionMap = new ConcurrentHashMap<>();
 
     @Resource
-    SingleChatService singleChatService;
+    SingleChatServiceImpl singleChatServiceImpl
+            ;
 
-    static SingleChatService staticSingleChatService;
+    static SingleChatServiceImpl staticSingleChatServiceImpl;
 
     /**
      * 连接建立成功调用的方法
@@ -65,7 +67,7 @@ public class WebSocketSingleServer implements InitializingBean {
         SingleChat singleChat = JSONUtil.toBean(message, SingleChat.class);
         singleChat.setTime(DateUtil.now());
         // 存储数据到数据库
-        staticSingleChatService.add(singleChat);
+        staticSingleChatServiceImpl.add(singleChat);
         String jsonStr = JSONUtil.toJsonStr(singleChat);  // 处理后的消息体
         this.sendAllMessage(jsonStr);
         log.info("[onMessage] 发送消息：{}", jsonStr);
@@ -109,7 +111,7 @@ public class WebSocketSingleServer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        staticSingleChatService = singleChatService;
+        staticSingleChatServiceImpl = singleChatServiceImpl;
     }
 
 
