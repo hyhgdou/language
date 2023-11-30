@@ -21,7 +21,7 @@ import java.util.UUID;
 //@CrossOrigin(origins = "*", maxAge = 3600)
 public class VoiceController {
 
-    private final String filePath = "/haizhi/";
+    private final String filePath = "/haizhi/laji/";
 
 @Autowired
 private VoiceService voiceService;
@@ -34,10 +34,8 @@ private VoiceService voiceService;
             //原始文件名
             String originalFilename = file.getOriginalFilename();//abc.jpg
             String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-
             //使用UUID重新生成文件名，防止文件名称重复造成文件覆盖
             String fileName = UUID.randomUUID().toString() + suffix;//dfsdfdfd.jpg
-
             //创建一个目录对象
             File dir = new File(filePath);
             //判断当前目录是否存在
@@ -45,7 +43,6 @@ private VoiceService voiceService;
                 //目录不存在，需要创建
                 dir.mkdirs();
             }
-
             try {
             //将临时文件转存到指定位置
             file.transferTo(new File(filePath + fileName));
@@ -53,12 +50,10 @@ private VoiceService voiceService;
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save voice file.");
         }
-
         // 进行语音处理和评估
         float score = voiceService.processAndEvaluateVoice(filePath);
-
         // 返回评分结果
-        return ResponseEntity.ok("Score: " + score);
+        return ResponseEntity.ok("宝宝的成绩为: " + score);
     }
 
 

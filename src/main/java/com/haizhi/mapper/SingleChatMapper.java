@@ -12,10 +12,10 @@ import java.util.List;
 public interface SingleChatMapper extends BaseMapper<SingleChat> {
 
 
-    @Select("select * from singlechat where (fromuser = #{fromUser} and touser = #{toUser}) or (fromuser = #{toUser} and touser = #{fromUser})")
+    @Select("select * from language.singlechat where (fromuser = #{fromUser} and touser = #{toUser}) or (fromuser = #{toUser} and touser = #{fromUser})")
     List<SingleChat> findByUsername(String fromUser, String toUser);
 
-    @Select("select * from singlechat where touser = #{toUser} and readed = 0")
+    @Select("select * from language.singlechat where touser = #{toUser} and readed = 0")
     List<SingleChat> findByToUsername(String toUser);
 
 }
