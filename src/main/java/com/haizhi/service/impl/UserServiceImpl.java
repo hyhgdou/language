@@ -8,11 +8,10 @@ import com.haizhi.pojo.User;
 import com.haizhi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ConcurrentModificationException;
-import java.util.Date;
 import java.util.List;
 
 
@@ -26,8 +25,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User login(User user) {
       //  String password = user.getPassword();
        // DigestUtils.md5DigestAsHex(password.getBytes());
-        //user.setCreate_time(LocalDateTime.now());
-        user.setUpdate_time(LocalDateTime.now());
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+        User user1=  userMapper.getByUsername(user.getUsername());
+        user.setIdentity(user1.getIdentity());
         return userMapper.getByUsernameAndPassword(user);
     }
 
@@ -53,31 +54,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }else {
             //2.判断注册的username是否合法：6位的英文字母
             //2.1判断长度
-            if(user.getUsername().length()==6){
+            if(user.getUsername().length()<20){
                 //2.2判断是否是英文字母(包含大小写)--遍历字符
-                for(int i=0;i<user.getUsername().length();i++){
-                    char element=user.getUsername().charAt(i);
-                    if((element >='a' && element <= 'z') || (element >= 'A' && element <= 'Z' )){//符合条件
-                        //3.判断输入的account是否超过20位或者为空
+           //     for(int i=0;i<user.getUsername().length();i++){
+              //      char element=user.getUsername().charAt(i);
+               //   if((element >='a' && element <= 'z') || (element >= 'A' && element <= 'Z' )){//符合条件
+                        //3.判断输入的account是否超过20位
                         if(user.getAccount().length()<=20 && user.getAccount().length() > 0){
                             //4.判断输入的密码password是否超过20位且不能为空
                             if(user.getPassword().length()<=20 && user.getPassword().length()>0){
                                 //5.判断输入的电话号码是否符合规则：是数字且等于11位
                                 if(user.getPhone().length()==11){
-                                    /*
-                                    *  //设置用户的创建时间
-                                    Date date = new Date();
-                                    //SimpleDateFormat 格式化时间的类
-                                    //在每一次调用该方法时，即每一次有增添回复时，该方法都由系统设置成当前时间
-                                    SimpleDateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // String comment_time =
-                                    String createTime=fmt.format(date);*/
-                                    //设置用户的创建时间
-                                    Date date = new Date();
-                                    //SimpleDateFormat 格式化时间的类
-                                    //在每一次调用该方法时，即每添加一次用户时，该方法都由系统设置成当前时间
-                                    SimpleDateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //
-                                    String createTime=fmt.format(date);
-                                   user.setCreate_time(createTime);
+                                    String pp = user.getPassword();
+                                    String s = DigestUtils.md5DigestAsHex(pp.getBytes());
+                                    user.setPassword(s);
                                     userMapper.insert(user);
                                 }else {
                                     msg="请输入正确的手机号码！";
@@ -91,11 +81,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                             msg="您输入的昵称不符合要求！请重新输入！";
                             //throw new CustomException("您输入的昵称过长！请重新输入！");
                         }
-                    }else{//不符合条件
-                        msg="您输入的密码不符合要求，请重新输入！";
+                //    }else{//不符合条件
+                    //    msg="您输入的密码不符合要求，请重新输入！";
                         //throw new CustomException("您输入的密码不符合要求，请重新输入！");
-                    }
-                }
+               //     }
+              //  }
             }else {
                 msg="您输出的用户名不符合要求，请重新输入！";
             }

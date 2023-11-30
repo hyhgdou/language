@@ -28,7 +28,7 @@ public class VoiceServiceImpl implements VoiceService {
     private float analyzeSentiment(String text) {
         // 调用自然语言处理API进行情感分析，返回情感分数
         // TODO: 调用情感分析API的具体实现
-        float Score = 0.8f;
+        float Score = 99.9f;
         return Score;
     }
 

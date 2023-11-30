@@ -54,8 +54,8 @@ public class UserController {
 
             String jwt = JwtUtil.generateJwt(claims); //jwt包含了当前登录的员工信息
 
-
-            return Result.success(jwt);
+             user.setToken(jwt);
+             return Result.success(user);
 
 
     }}
@@ -80,6 +80,7 @@ public class UserController {
         //userService.save(user);
         //已经返回的字符串如果=null则说明限制全部通过，注册成功，否则失败
         String msg=userService.addUser(user);
+
         if(msg.equals("success")){
             return Result.success();
         }else {

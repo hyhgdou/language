@@ -28,6 +28,7 @@ public class SingleChatController {
      */
     @GetMapping
     public Result findByFromUsername(@RequestParam String fromUser, @RequestParam String toUser) {
+
         List<SingleChat> all = singleChatService.findByUsername(fromUser, toUser);
         return Result.success(all);
     }
@@ -38,6 +39,7 @@ public class SingleChatController {
      */
     @GetMapping("/unReadNums")
     public Result findUnReadNums(@RequestParam String toUsername) {
+
         Dict dict = singleChatService.findUnReadNums(toUsername);
         return Result.success(dict);
     }
