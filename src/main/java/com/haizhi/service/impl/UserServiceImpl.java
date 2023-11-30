@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,8 +27,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User login(User user) {
       //  String password = user.getPassword();
        // DigestUtils.md5DigestAsHex(password.getBytes());
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
+
+        //user.setUpdate_time();
         User user1=  userMapper.getByUsername(user.getUsername());
         user.setIdentity(user1.getIdentity());
         return userMapper.getByUsernameAndPassword(user);
@@ -68,6 +70,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                                     String pp = user.getPassword();
                                     String s = DigestUtils.md5DigestAsHex(pp.getBytes());
                                     user.setPassword(s);
+                                    Date date = new Date();
+                                    //SimpleDateFormat 格式化时间的类
+                                    //在每一次调用该方法时，即每一次增添用户时，该方法都由系统设置成当前时间
+                                    SimpleDateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    String create_time=fmt.format(date);
+                                    user.setCreate_time(create_time);
                                     userMapper.insert(user);
                                 }else {
                                     msg="请输入正确的手机号码！";
