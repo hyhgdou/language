@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 public interface VoiceService {
 
-    float processAndEvaluateVoice(String filePath);
+    String processAndEvaluateVoice(String filePath);
 }

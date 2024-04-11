@@ -33,7 +33,7 @@ public class xiaominController {
         Xiaomin xm = xiaominService.getRandomXiaomin();
         if (xm!=null){
             String html = "<div>";
-            html += "<p>" + xm.getText() + "</p>";
+            html += "<h1>" + xm.getText() + "</h1>";
             html += "<img src=\"" + xm.getPicture() + "\" alt=\"Image\">";
             html += "</div>";
             return html;

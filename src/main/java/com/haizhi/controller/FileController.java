@@ -17,7 +17,7 @@ import java.util.List;
 public class FileController {
     // 文件上传存储路径
     private static final String filePath = System.getProperty("user.dir") + "/file/";//项目的根目录
-    private static final String http = "http://47.97.1.166:9090/files/";
+    private static final String http = "http://59.110.229.154:9090/files/";
 
     /**
      * 文件上传

@@ -20,9 +20,8 @@ import java.util.UUID;
 @Api(tags = "语音相关接口")
 //@CrossOrigin(origins = "*", maxAge = 3600)
 public class VoiceController {
-
-    private final String filePath = "/haizhi/laji/";
-
+  private final String filePath = "/haizhi/laji/";
+  //private final String filePath ="C:\\Users\\hyhjames\\Desktop";
 @Autowired
 private VoiceService voiceService;
 
@@ -51,9 +50,12 @@ private VoiceService voiceService;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save voice file.");
         }
         // 进行语音处理和评估
-        float score = voiceService.processAndEvaluateVoice(filePath);
+        String score = voiceService.processAndEvaluateVoice(filePath+ fileName);
         // 返回评分结果
-        return ResponseEntity.ok("宝宝的成绩为: " + score);
+
+
+
+        return ResponseEntity.ok(score);
     }
 
 
